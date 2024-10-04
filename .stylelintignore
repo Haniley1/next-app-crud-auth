@@ -1,0 +1,5 @@
+# production
+.next
+.templates
+
+node_modules

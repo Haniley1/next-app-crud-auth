@@ -1,0 +1,27 @@
+@use 'styles/variable' as *;
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.linkItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 12px 2px;
+  border-bottom: 2px solid transparent;
+  transition: $transition200;
+
+  &:hover, &.active {
+    color: #1e91e3;
+    border-bottom-color: #1e91e3;
+  }
+}
+
+.linkIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}

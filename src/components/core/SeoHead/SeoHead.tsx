@@ -1,13 +1,12 @@
 import Head from 'next/head'
-import { FunctionComponent } from 'react'
 import { Meta } from 'api/models'
 
-export const SeoHead: FunctionComponent<Meta> = ({
+export const SeoHead = ({
   seoDescription,
   seoImage,
   seoTitle,
   seoKeywords,
-}): JSX.Element => {
+}: Meta) => {
   return (
     <Head>
       {seoDescription && (
@@ -17,7 +16,7 @@ export const SeoHead: FunctionComponent<Meta> = ({
         </>
       )}
 
-      {seoImage && <meta property="og:image" content={seoImage.src} />}
+      {seoImage && <meta property="og:image" content={seoImage} />}
 
       {seoTitle && (
         <>

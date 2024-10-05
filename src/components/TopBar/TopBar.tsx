@@ -1,17 +1,18 @@
-import { Layout as AntLayout, Menu } from 'antd'
+import { Container } from 'components'
 import Link from 'next/link'
+import styles from './styles.module.scss'
+import { CompanyLogo } from 'components/CompanyLogo'
+import { Links } from './components'
 
 export const TopBar = () => {
   return (
-    <AntLayout.Header>
-      <Menu mode="horizontal">
-        <Menu.Item key="/">
-          <Link href="/" children="test" />
-        </Menu.Item>
-        <Menu.Item key="/profile">
-          <Link href="/profile" children="test" />
-        </Menu.Item>
-      </Menu>
-    </AntLayout.Header>
+    <header className={styles.topBar}>
+      <Container>
+        <div className={styles.innerContainer}>
+          <CompanyLogo />
+          <Links />
+        </div>
+      </Container>
+    </header>
   )
 }

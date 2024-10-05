@@ -1,0 +1,84 @@
+@mixin netbookBigMax {
+  @media (max-width: 1919px) {
+    @content;
+  }
+}
+
+@mixin netbookMax {
+  @media (max-width: 1439px) {
+    @content;
+  }
+}
+
+@mixin tabletMax {
+  @media (max-width: 1279px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin opacityCoverImage {
+  opacity: var(--opacityCoverImage, 0);
+}
+
+// Затемнение для блоков в верстке на странице
+@mixin backgroundForOpacity($type) {
+  @include opacityCoverImage;
+  @if $type == backgroundImage {
+    background: linear-gradient(360deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+  }
+
+  @if $type == promo {
+    background: linear-gradient(0deg, rgba(0, 0, 0) 0%, rgba(0, 0, 0) 100%);
+  }
+}
+
+@mixin mainScreenSubstrate($zIdx: 1) {
+  &::before,
+  &::after {
+    @include opacityCoverImage;
+    z-index: $zIdx;
+    @content;
+  }
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: rgb(29, 29, 29, 0.7);
+  }
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0) 64.63%
+    );
+  }
+}
+
+@mixin multilineText($linesCount) {
+  word-break: break-word;
+  display: -webkit-box;
+  line-clamp: $linesCount;
+  -webkit-line-clamp: $linesCount;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@mixin ellipsisText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin hoverDevice {
+  @media (hover: hover) {
+    @content;
+  }
+}

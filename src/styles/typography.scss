@@ -1,0 +1,12 @@
+@use 'styles/_variable' as *;
+
+a:not(.no-anchor-style) {
+  color: #000;
+  transition: $transition200;
+  text-decoration: underline;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+    color: #1e91e3;
+  }
+}

@@ -1,13 +1,13 @@
-import { Layout as AntLayout } from 'antd'
-import { TopBar } from 'components'
+import { Container, TopBar } from 'components'
 import type { PropsWithChildren } from 'react'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <AntLayout>
+    <div>
       <TopBar />
-      <AntLayout.Content>{children}</AntLayout.Content>
-      <AntLayout.Footer></AntLayout.Footer>
-    </AntLayout>
+      <main>
+        <Container>{children}</Container>
+      </main>
+    </div>
   )
 }

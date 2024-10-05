@@ -15,13 +15,15 @@ export const UserCard = ({ user, onDelete }: UserCardProps) => {
       <Link href={ROUTES.userDetail(user.id)}>
         <div className={styles.innerContainer}>
           <div className={styles.avatarWrapper}>
-            <Image
-              className={styles.avatar}
-              width={168}
-              height={168}
-              src={user.avatar}
-              alt="avatar"
-            />
+            {user.avatar && (
+              <Image
+                className={styles.avatar}
+                width={168}
+                height={168}
+                src={user.avatar}
+                alt="avatar"
+              />
+            )}
           </div>
           <h3>{name}</h3>
           <span>{user.email}</span>
@@ -32,7 +34,7 @@ export const UserCard = ({ user, onDelete }: UserCardProps) => {
         type="button"
         onClick={() => onDelete?.(user.id)}
       >
-        <Icon section='general' name='trash' iconStyles={styles.deleteIcon} />
+        <Icon section="general" name="trash" iconStyles={styles.deleteIcon} />
       </Button>
     </div>
   )

@@ -18,23 +18,12 @@ export const UserFilters = ({ onSubmit }: UserFiltersProps) => {
     <div className={styles.filters}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <input
-          className={styles.input}
           placeholder="Электронная почта"
           type="email"
           {...register('email')}
         />
-        <input
-          className={styles.input}
-          placeholder="Имя"
-          type="text"
-          {...register('first_name')}
-        />
-        <input
-          className={styles.input}
-          placeholder="Фамилия"
-          type="text"
-          {...register('last_name')}
-        />
+        <input placeholder="Имя" type="text" {...register('first_name')} />
+        <input placeholder="Фамилия" type="text" {...register('last_name')} />
       </form>
     </div>
   )

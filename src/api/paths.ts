@@ -8,5 +8,6 @@ export const ROUTES = {
 
 export const API_PATHS = {
   users: '/users',
+  user: (id: string | number) => `/users/${id}`,
   auth: '/login'
 }

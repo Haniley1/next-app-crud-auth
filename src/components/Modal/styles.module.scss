@@ -1,0 +1,16 @@
+.Modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  padding: 16px;
+  background-color: #000;
+  color: #fff;
+}
+
+.Overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(29, 29, 29, 0.8);
+}

@@ -9,9 +9,11 @@ export const useFilteredUsers = (
   const [filteredUsers, setFilteredUsers] = useState(users)
 
   const dynamicFilter = (user: User) => {
+    if (!filter) return true
+
     let result = true
 
-    for (let [key, value] of Object.entries(filter!)) {
+    for (let [key, value] of Object.entries(filter)) {
       if (!value) continue
 
       result = user[key as keyof UserFiltersForm]
@@ -23,9 +25,7 @@ export const useFilteredUsers = (
   }
 
   useEffect(() => {
-    if (filter) {
-      setFilteredUsers(users.filter(dynamicFilter))
-    }
+    setFilteredUsers(users.filter(dynamicFilter))
   }, [users, filter])
 
   return filteredUsers

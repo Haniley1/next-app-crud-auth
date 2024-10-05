@@ -1,10 +1,10 @@
 export interface User {
-  id: number
+  id: string | number
   email: string
   first_name: string
   last_name: string
   /**
    * Ссылка на картинку
    */
-  avatar: string // img src
+  avatar: string | null // img src
 }

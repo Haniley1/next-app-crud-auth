@@ -1,2 +1,5 @@
 export * from './UserCard'
 export * from './UserFilters'
+export * from './UsersList'
+export * from './UserForm'
+export * from './UserModal'

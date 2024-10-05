@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { ROUTES } from 'api/paths'
  
-const protectedRoutes = ['/profile']
+const protectedRoutes = [ROUTES.profile]
  
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
   const isProtectedRoute = protectedRoutes.includes(path)
   const sessionToken = cookies().get('session')?.value
-  console.log(req.nextUrl)
  
   if (isProtectedRoute && !sessionToken) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl))
+    const url = new URL(ROUTES.login, req.nextUrl)
+    url.searchParams.set('redirect', req.nextUrl.pathname)
+
+    return NextResponse.redirect(url)
   }
  
   return NextResponse.next()

@@ -34,7 +34,8 @@ export const Links = () => {
         <Link
           key={link.href}
           href={link.href}
-          className={clsx('no-anchor-style', styles.linkItem, {
+          prefetch={false}
+          className={clsx(styles.linkItem, {
             [styles.active]: router.asPath === link.href,
           })}
         >

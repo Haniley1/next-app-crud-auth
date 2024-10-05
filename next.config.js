@@ -5,6 +5,15 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
+  images: {
+    domains: ['reqres.in'],
+    remotePatterns: [
+      {
+        hostname: '**',
+        protocol: 'https',
+      },
+    ],
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.plugins.push(

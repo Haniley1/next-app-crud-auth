@@ -1,0 +1,52 @@
+@use 'styles/variable' as *;
+
+.userCard {
+  position: relative;
+  border: 1px solid $neutral-grey-003;
+  border-radius: 16px;
+  transition: $transition200;
+
+  &:hover {
+    background-color: $neutral-grey-003;
+  }
+
+  &:hover .avatar {
+    transform: scale(1.2);
+  }
+}
+
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+.avatarWrapper {
+  height: 168px;
+  margin-bottom: 12px;
+
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar {
+  transition: $transition200;
+}
+
+.button.deleteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: $colorful-red-001;
+
+  &:hover {
+    background-color: $colorful-red-001;
+    opacity: .8;
+  };
+}
+
+.deleteIcon {
+  width: 24px;
+  height: 24px;
+}

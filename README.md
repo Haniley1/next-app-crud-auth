@@ -1,40 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+# Запуск проекта
+Node.js 18.13
 
 ```bash
-npm run dev
-# or
+yarn
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Задание 
+### Сделать на Next следующие страницы:
+- / - главная - SSG
+- /login - страница ввода логина и пароля - SPA
+- /users - страница с пользователями - SSG
+- /users/:id - страница конкретного пользователя - SSG
+- /profile - страница с произвольным текстом, недоступная без авторизации - SSR
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### В шапке или подвале реализовать минимальный набор ссылок:
+- На главную (/)
+- Пользователи (/users)
+- Профиль (/profile) - видно всегда, даже когда не авторизован
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Если пользователь попадает на страницу /profile и он не авторизован - перекидывать на страницу /login. 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Форма входа (/login) состоит их двух полей email и password. Для авторизации используем POST
+https://reqres.in/api/login. В случае успешного ответа от сервера,
+перебрасываем на страницу /profile, в противном выводить error, который
+пришел в ответе. Информация об авторизации пользователя должна
+сохраняться при перезагрузке страницы.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Страница /users содержит список пользователей. Первоначальный список
+пользователей получаем GET https://reqres.in/api/users. Все остальные
+действия с пользователями (добавление, удаление, фильтрация) реализуем
+через глобальный/локальный стейт.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### На странице пользователей необходимо реализовать возможность:
+- добавления и удаления пользователей
+- переходы на конкретные страницы пользователей /users/:id
+- форму для фильтрации пользователей по email/first_name/last_name
+- Выбор фильтров должен сохраняться при перезагрузке страницы
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Технические требования
+- Для форм используем react-hook-forn
+- Дизайн не важно. 
+- Для сетевого слоя использовать SWR/React-query

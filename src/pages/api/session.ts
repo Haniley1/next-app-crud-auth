@@ -1,7 +1,9 @@
+import type { AxiosError } from 'axios'
 import { getIronSession } from 'iron-session'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'api/endpoints'
 import { defaultSession, SessionData, sessionOptions } from 'api/session'
+import { SignInErrorResponse } from './../../api/endpoints/auth'
 
 export default async function login(
   request: NextApiRequest,
@@ -17,20 +19,17 @@ export default async function login(
     case 'GET':
       return response.json(session.isLoggedIn ? session : defaultSession)
     case 'POST':
-      const reqresResponse = await getToken(
-        request.body.email,
-        request.body.password
-      )
+      return getToken(request.body.email, request.body.password)
+        .then(async (res) => {
+          session.token = res.data.token
+          session.isLoggedIn = true
+          await session.save()
 
-      if (reqresResponse.data.token) {
-        session.token = reqresResponse.data.token
-        session.isLoggedIn = true
-        await session.save()
-
-        return response.status(200).json(session)
-      } else {
-        return response.status(403).json({ message: 'Something went wrong' })
-      }
+          return response.status(200).json(session)
+        })
+        .catch((error: AxiosError<SignInErrorResponse>) => {
+          return response.status(403).json(error.response?.data)
+        })
     case 'DELETE':
       session.destroy()
 

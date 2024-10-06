@@ -47,7 +47,7 @@ export default function UsersPage({
   return (
     <>
       <SeoHead {...meta} />
-      <UserDetail id={user.data.id.toString()} />
+      <UserDetail user={user.data} />
     </>
   )
 }

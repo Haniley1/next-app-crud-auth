@@ -5,15 +5,7 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import { fullname } from 'utils/string'
 
-export const UserDetail = ({ id }: Pick<User, 'id'>) => {
-  const { data, isLoading } = useSWR<GetUserResponse>([API_PATHS.users, id])
-
-  if (!data || isLoading) {
-    return <div>Loading...</div>
-  }
-
-  const user = data.data
-
+export const UserDetail = ({ user }: { user: User }) => {
   return (
     <div>
       {user.avatar && (
@@ -26,7 +18,7 @@ export const UserDetail = ({ id }: Pick<User, 'id'>) => {
         />
       )}
       <h1>{fullname(user.first_name, user.last_name)}</h1>
-      <span>{data?.data.email}</span>
+      <span>{user.email}</span>
     </div>
   )
 }

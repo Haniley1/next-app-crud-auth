@@ -1,13 +1,17 @@
-import Head from 'next/head'
 import { Home } from 'modules/Home'
-import { Layout, SeoHead } from 'components/core'
+import { SeoHead } from 'components/core'
 import type { Meta } from 'api/models'
+import type { GetStaticProps } from 'next'
 
-const meta: Meta = {
-  seoTitle: 'Главная',
-}
+export const getStaticProps = (() => {
+  return { props: {} }
+}) satisfies GetStaticProps
 
 export default function HomePage() {
+  const meta: Meta = {
+    seoTitle: 'Главная',
+  }
+
   return (
     <>
       <SeoHead {...meta} />

@@ -1,9 +1,8 @@
-import { getUser, getUsers } from 'api/endpoints'
-import type { Meta } from 'api/models'
+import { getUser, getUsers, type GetUserResponse } from 'api/endpoints'
+import type { Meta, User } from 'api/models'
 import { API_PATHS } from 'api/paths'
 import { SeoHead } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
-import { Users } from 'modules/Users'
 import type {
   InferGetStaticPropsType,
   GetStaticPaths,
@@ -11,29 +10,42 @@ import type {
 } from 'next'
 import { unstable_serialize } from 'swr'
 import type { ParamsStatic } from 'types'
+import { defineNextError } from 'utils/defineNextError'
 import { fullname } from 'utils/string'
 
 export const getStaticPaths = (async () => {
   const response = await getUsers()
 
-  const paths = response.data.map((item) => ({
-    params: { id: item.id.toString() },
-  }))
-
-  return { paths, fallback: false }
+  try {    
+    const paths = response.data.map((item) => ({
+      params: { id: item.id.toString() },
+    }))
+  
+    return { paths, fallback: false }
+  } catch (error) {
+    return { paths: [], fallback: 'blocking' }
+  }
 }) satisfies GetStaticPaths
 
 export const getStaticProps = (async (context) => {
   const { id } = context.params as ParamsStatic
-  const response = await getUser(id)
 
-  return {
-    props: {
-      user: response,
-      fallback: {
-        [unstable_serialize([API_PATHS.users, id])]: response,
+  try {
+    const response = await getUser(id)
+
+    return {
+      props: {
+        user: response,
+        fallback: {
+          [unstable_serialize([API_PATHS.users, id])]: response,
+        },
       },
-    },
+    }
+  } catch (error) {
+    return {
+      ...defineNextError(error),
+      props: { user: {} as GetUserResponse },
+    }
   }
 }) satisfies GetStaticProps
 

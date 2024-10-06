@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Container } from 'components'
 import { CompanyLogo } from 'components/CompanyLogo'
 import { Links } from './components'

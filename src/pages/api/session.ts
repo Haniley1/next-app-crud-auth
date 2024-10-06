@@ -1,6 +1,6 @@
 import { getIronSession } from 'iron-session'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { signIn } from 'api/endpoints'
+import { getToken } from 'api/endpoints'
 import { defaultSession, SessionData, sessionOptions } from 'api/session'
 
 export default async function login(
@@ -17,7 +17,7 @@ export default async function login(
     case 'GET':
       return response.json(session.isLoggedIn ? session : defaultSession)
     case 'POST':
-      const reqresResponse = await signIn(
+      const reqresResponse = await getToken(
         request.body.email,
         request.body.password
       )

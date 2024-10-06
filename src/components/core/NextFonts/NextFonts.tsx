@@ -7,6 +7,7 @@ const roboto = Roboto({
 
 export const NextFonts = () => {
   return (
+    // eslint-disable-next-line react/no-unknown-property
     <style jsx global>{`
       :root {
         --font-base: ${roboto.style.fontFamily};

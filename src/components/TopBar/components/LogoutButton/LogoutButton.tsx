@@ -16,5 +16,5 @@ export const LogoutButton = ({ className }: { className: string }) => {
 
   if (!session.isLoggedIn) return null
 
-  return <a className={className} onClick={onLogout} children="Выйти" />
+  return <a className={className} onClick={onLogout} >Выйти</a>
 }

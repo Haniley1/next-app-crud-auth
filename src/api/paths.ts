@@ -9,6 +9,6 @@ export const ROUTES = {
 export const API_PATHS = {
   users: '/users',
   user: (id: string | number) => `/users/${id}`,
-  signIn: '/login',
+  getToken: '/login',
   session: '/api/session'
 }

@@ -1,6 +1,7 @@
 import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import type { SignInErrorResponse } from 'api/endpoints'
 import { useSession } from 'hooks'
 import { LoginForm } from './LoginForm'
 import type { LoginFormValues } from './LoginForm/types'
@@ -17,8 +18,8 @@ export const Login = () => {
           router.push(router.query.redirect.toString())
         }
       })
-      .catch((error) => {
-        setError(error.response?.data.error)
+      .catch((err: AxiosError<SignInErrorResponse>) => {
+        setError(err.response?.data.error)
       })
   }
 

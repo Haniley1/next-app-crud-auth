@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Icon } from 'components'
 import { Button } from 'components/forms'
@@ -16,7 +16,7 @@ export const LoginForm = ({ error, onSubmit }: LoginFormProps) => {
     handleSubmit,
     formState: { errors, isValid },
     setError,
-  } = useForm<LoginFormValues>()
+  } = useForm<LoginFormValues>({ mode: 'onChange' })
 
   useEffect(() => {
     error && setError('root', { message: error })

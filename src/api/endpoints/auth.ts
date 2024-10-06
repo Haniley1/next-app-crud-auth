@@ -1,4 +1,4 @@
-import api, { clientApi } from "api/instance"
+import api from "api/instance"
 import { API_PATHS } from "api/paths"
 
 export interface SignInResponse {
@@ -9,6 +9,6 @@ export interface SignInErrorResponse {
   error: string
 }
 
-export const signIn = (email: string, password: string) => {
-  return api.post<SignInResponse>(API_PATHS.signIn, { email, password })
+export const getToken = (email: string, password: string) => {
+  return api.post<SignInResponse>(API_PATHS.getToken, { email, password })
 }

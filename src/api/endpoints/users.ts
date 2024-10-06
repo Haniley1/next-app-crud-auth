@@ -10,8 +10,11 @@ export const getUsers = async () => {
   return response.data
 }
 
+export interface GetUserResponse {
+  data: User
+}
 export const getUser = async (id: string | number) => {
-  const response = await api.get<{ data: User }>(API_PATHS.user(id))
+  const response = await api.get<GetUserResponse>(API_PATHS.user(id))
 
   return response.data
 }

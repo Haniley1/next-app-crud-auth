@@ -13,3 +13,6 @@ export function makeid(length = 8) {
 
   return result
 }
+
+export const fullname = (firstName: string, lastName: string) =>
+  `${firstName} ${lastName}`

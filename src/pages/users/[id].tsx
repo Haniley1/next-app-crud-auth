@@ -2,6 +2,7 @@ import { getUser, getUsers } from 'api/endpoints'
 import type { Meta } from 'api/models'
 import { API_PATHS } from 'api/paths'
 import { SeoHead } from 'components/core'
+import { UserDetail } from 'modules/UserDetail'
 import { Users } from 'modules/Users'
 import type {
   InferGetStaticPropsType,
@@ -10,6 +11,7 @@ import type {
 } from 'next'
 import { unstable_serialize } from 'swr'
 import type { ParamsStatic } from 'types'
+import { fullname } from 'utils/string'
 
 export const getStaticPaths = (async () => {
   const response = await getUsers()
@@ -35,16 +37,17 @@ export const getStaticProps = (async (context) => {
   }
 }) satisfies GetStaticProps
 
-export default function UsersPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(props)
+export default function UsersPage({
+  user,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const meta: Meta = {
-    seoTitle: `Пользователь ${props.user.data.first_name} ${props.user.data.last_name}`,
+    seoTitle: `Пользователь ${fullname(user.data.first_name, user.data.last_name)}`,
   }
 
   return (
     <>
       <SeoHead {...meta} />
-      <div>test</div>
+      <UserDetail id={user.data.id.toString()} />
     </>
   )
 }

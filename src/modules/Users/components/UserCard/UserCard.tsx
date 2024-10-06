@@ -6,13 +6,12 @@ import Image from 'next/image'
 import { Button } from 'components/forms'
 import clsx from 'clsx'
 import { Icon } from 'components'
+import { fullname } from 'utils/string'
 
 export const UserCard = ({ user, onDelete }: UserCardProps) => {
-  const name = `${user.first_name} ${user.last_name}`
-
   return (
     <div className={styles.userCard}>
-      <Link href={ROUTES.userDetail(user.id)}>
+      <Link href={ROUTES.userDetail(user.id)} prefetch={false}>
         <div className={styles.innerContainer}>
           <div className={styles.avatarWrapper}>
             {user.avatar && (
@@ -25,7 +24,7 @@ export const UserCard = ({ user, onDelete }: UserCardProps) => {
               />
             )}
           </div>
-          <h3>{name}</h3>
+          <h3>{fullname(user.first_name, user.last_name)}</h3>
           <span>{user.email}</span>
         </div>
       </Link>

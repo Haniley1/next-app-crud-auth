@@ -38,7 +38,7 @@ export const Links = () => {
           href={link.href}
           prefetch={false}
           className={clsx(styles.linkItem, {
-            [styles.active]: router.asPath === link.href,
+            [styles.active]: router.pathname === link.href,
           })}
         >
           <Icon {...link.icon} iconStyles={styles.linkIcon} />

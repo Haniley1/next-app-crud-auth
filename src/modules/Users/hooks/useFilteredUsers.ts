@@ -6,10 +6,10 @@ export const useFilteredUsers = (
   users: User[] = [],
   filter?: UserFiltersForm
 ) => {
-  const [filteredUsers, setFilteredUsers] = useState(users)
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([])
 
   const dynamicFilter = (user: User) => {
-    if (!filter) return true
+    if (!filter) return false
 
     let result = true
 

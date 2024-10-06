@@ -1,3 +1,4 @@
+import type { GetStaticProps } from 'next'
 import { getUsers } from 'api/endpoints'
 import type { Meta } from 'api/models'
 import { API_PATHS } from 'api/paths'
@@ -5,7 +6,7 @@ import { Layout, SeoHead } from 'components/core'
 import { Users } from 'modules/Users'
 import { defineNextError } from 'utils/defineNextError'
 
-export async function getStaticProps() {
+export const getStaticProps = (async () => {
   try {
     const response = await getUsers()
 
@@ -19,7 +20,7 @@ export async function getStaticProps() {
   } catch (error) {
     return defineNextError(error)
   }
-}
+}) satisfies GetStaticProps
 
 export default function UsersPage() {
   const meta: Meta = {

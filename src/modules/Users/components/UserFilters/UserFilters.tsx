@@ -1,18 +1,33 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSearchParamsFilter } from 'modules/Users/hooks'
 import { debounce } from 'utils'
 import styles from './styles.module.scss'
 import type { UserFiltersForm, UserFiltersProps } from './types'
 
 export const UserFilters = ({ onSubmit }: UserFiltersProps) => {
-  const { register, watch, handleSubmit } = useForm<UserFiltersForm>()
+  const { searchParamsValues, addSearchParams, isReady } = useSearchParamsFilter()
+  const { register, watch, handleSubmit } = useForm<UserFiltersForm>({
+    values: searchParamsValues,
+  })
 
   useEffect(() => {
-    const debouncedSubmit = debounce(() => handleSubmit(onSubmit)())
+    const debouncedSubmit = debounce((values) => {
+      addSearchParams(values as UserFiltersForm)
+      handleSubmit(onSubmit)()
+    })
     const subscription = watch(debouncedSubmit)
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [addSearchParams, handleSubmit, onSubmit, watch])
+
+  // Вызвать сабмит фильтров, когда подтянутся значения из GET-параметров
+  // Хак, чтобы список пользаков не отрисовывался дважды: без фильтров и с фильтрами
+  useEffect(() => {
+    if (isReady) {
+      handleSubmit(onSubmit)()
+    }
+  }, [isReady])
 
   return (
     <div className={styles.filters}>

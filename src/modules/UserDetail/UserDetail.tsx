@@ -1,8 +1,5 @@
-import { GetUserResponse } from 'api/endpoints'
-import type { User } from 'api/models'
-import { API_PATHS } from 'api/paths'
 import Image from 'next/image'
-import useSWR from 'swr'
+import type { User } from 'api/models'
 import { fullname } from 'utils/string'
 
 export const UserDetail = ({ user }: { user: User }) => {

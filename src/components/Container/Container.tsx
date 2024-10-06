@@ -1,7 +1,7 @@
+import clsx from 'clsx'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import styles from './styles.module.scss'
 import type { ContainerProps } from './types'
-import clsx from 'clsx'
 
 export const Container: FunctionComponent<
   PropsWithChildren<ContainerProps>

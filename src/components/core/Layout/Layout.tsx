@@ -1,5 +1,5 @@
-import { Container, TopBar } from 'components'
 import type { PropsWithChildren } from 'react'
+import { Container, TopBar } from 'components'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   return (

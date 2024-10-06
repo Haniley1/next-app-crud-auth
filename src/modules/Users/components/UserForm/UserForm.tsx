@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form'
-import styles from './styles.module.scss'
 import { Button } from 'components/forms'
 import { emailValidator, requiredValidator } from 'utils/form'
 import { ariaInvalid } from 'utils/form/misc'
+import styles from './styles.module.scss'
 import type { UserFormProps, UserFormValues } from './types'
 
 const AVATAR_ACCEPT_TYPES = ['image/png', 'image/jpeg']

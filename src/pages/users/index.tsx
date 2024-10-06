@@ -1,7 +1,7 @@
 import { getUsers } from 'api/endpoints'
 import type { Meta } from 'api/models'
 import { API_PATHS } from 'api/paths'
-import { SeoHead } from 'components/core'
+import { Layout, SeoHead } from 'components/core'
 import { Users } from 'modules/Users'
 import { defineNextError } from 'utils/defineNextError'
 
@@ -27,9 +27,9 @@ export default function UsersPage() {
   }
 
   return (
-    <>
+    <Layout>
       <SeoHead {...meta} />
       <Users />
-    </>
+    </Layout>
   )
 }

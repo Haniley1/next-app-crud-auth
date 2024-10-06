@@ -1,32 +1,34 @@
-import { Icon } from 'components/Icon'
-import Link from 'next/link'
-import styles from './styles.module.scss'
-import { useRouter } from 'next/router'
-import type { IIconProps } from 'components/Icon/types'
-import type { ReactNode } from 'react'
 import clsx from 'clsx'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import type { ReactNode } from 'react'
+import { ROUTES } from 'api/paths'
+import { Icon } from 'components/Icon'
+import type { IIconProps, SpriteSections } from 'components/Icon/types'
+import styles from './styles.module.scss'
+import { LogoutButton } from '../LogoutButton'
 
 interface TopBarLink {
   href: string
-  icon: IIconProps<'general' | 'users'>
+  icon: IIconProps<SpriteSections>
   text: ReactNode
 }
 
-const links: TopBarLink[] = [
-  {
-    href: '/users',
-    text: 'Пользователи',
-    icon: { section: 'users', name: 'user' },
-  },
-  {
-    href: '/profile',
-    text: 'Мой профиль',
-    icon: { section: 'general', name: 'profile-card' },
-  },
-]
-
 export const Links = () => {
   const router = useRouter()
+
+  const links: TopBarLink[] = [
+    {
+      href: ROUTES.users,
+      text: 'Пользователи',
+      icon: { section: 'users', name: 'user' },
+    },
+    {
+      href: ROUTES.profile,
+      text: 'Мой профиль',
+      icon: { section: 'general', name: 'profile-card' },
+    },
+  ]
 
   return (
     <div className={styles.links}>
@@ -43,6 +45,7 @@ export const Links = () => {
           <span>{link.text}</span>
         </Link>
       ))}
+      <LogoutButton className={styles.linkItem} />
     </div>
   )
 }

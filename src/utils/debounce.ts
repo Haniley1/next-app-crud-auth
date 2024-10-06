@@ -1,4 +1,4 @@
-export const debounce = (func: Function, timeout = 300) => {
+export const debounce = (func: (...args: unknown[]) => void, timeout = 300) => {
   let timer: number
 
   return (...args: unknown[]) => {

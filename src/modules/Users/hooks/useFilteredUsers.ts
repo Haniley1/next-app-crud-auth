@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react'
 import type { User } from 'api/models'
 import type { UserFiltersForm } from '../components/UserFilters/types'
-import { useEffect, useState } from 'react'
 
 export const useFilteredUsers = (
   users: User[] = [],
@@ -13,7 +13,7 @@ export const useFilteredUsers = (
 
     let result = true
 
-    for (let [key, value] of Object.entries(filter)) {
+    for (const [key, value] of Object.entries(filter)) {
       if (!value) continue
 
       result = user[key as keyof UserFiltersForm]

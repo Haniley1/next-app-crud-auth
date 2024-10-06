@@ -1,8 +1,8 @@
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getUser } from 'api/endpoints'
 import type { Meta, User } from 'api/models'
-import { SeoHead } from 'components/core'
+import { Layout, SeoHead } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { defineNextError } from 'utils/defineNextError'
 import { fullname } from 'utils/string'
 
@@ -30,9 +30,9 @@ export default function ProfilePage({
   }
 
   return (
-    <>
+    <Layout>
       <SeoHead {...meta} />
       <UserDetail user={data} />
-    </>
+    </Layout>
   )
 }

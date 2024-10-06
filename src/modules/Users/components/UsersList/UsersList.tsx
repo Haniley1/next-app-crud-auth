@@ -1,7 +1,7 @@
 import { useFilteredUsers } from 'modules/Users/hooks'
 import { UserCard } from '../UserCard'
-import type { UsersListProps } from './types'
 import styles from './styles.module.scss'
+import type { UsersListProps } from './types'
 
 export const UsersList = ({ users, filters, onDelete }: UsersListProps) => {
   const filteredUsers = useFilteredUsers(users, filters)

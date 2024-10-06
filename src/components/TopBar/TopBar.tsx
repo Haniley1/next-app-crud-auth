@@ -1,8 +1,8 @@
-import { Container } from 'components'
 import Link from 'next/link'
-import styles from './styles.module.scss'
+import { Container } from 'components'
 import { CompanyLogo } from 'components/CompanyLogo'
 import { Links } from './components'
+import styles from './styles.module.scss'
 
 export const TopBar = () => {
   return (

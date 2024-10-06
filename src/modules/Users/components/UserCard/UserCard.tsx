@@ -1,12 +1,12 @@
-import type { UserCardProps } from './types'
-import styles from './styles.module.scss'
+import clsx from 'clsx'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ROUTES } from 'api/paths'
-import Image from 'next/image'
-import { Button } from 'components/forms'
-import clsx from 'clsx'
 import { Icon } from 'components'
+import { Button } from 'components/forms'
 import { fullname } from 'utils/string'
+import styles from './styles.module.scss'
+import type { UserCardProps } from './types'
 
 export const UserCard = ({ user, onDelete }: UserCardProps) => {
   return (

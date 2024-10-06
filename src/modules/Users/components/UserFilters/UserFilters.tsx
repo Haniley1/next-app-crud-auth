@@ -1,8 +1,8 @@
-import { useForm } from 'react-hook-form'
-import type { UserFiltersForm, UserFiltersProps } from './types'
 import { useEffect } from 'react'
-import styles from './styles.module.scss'
+import { useForm } from 'react-hook-form'
 import { debounce } from 'utils'
+import styles from './styles.module.scss'
+import type { UserFiltersForm, UserFiltersProps } from './types'
 
 export const UserFilters = ({ onSubmit }: UserFiltersProps) => {
   const { register, watch, handleSubmit } = useForm<UserFiltersForm>()

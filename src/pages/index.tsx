@@ -1,7 +1,7 @@
-import { Home } from 'modules/Home'
-import { SeoHead } from 'components/core'
-import type { Meta } from 'api/models'
 import type { GetStaticProps } from 'next'
+import type { Meta } from 'api/models'
+import { Layout, SeoHead } from 'components/core'
+import { Home } from 'modules/Home'
 
 export const getStaticProps = (() => {
   return { props: {} }
@@ -13,9 +13,9 @@ export default function HomePage() {
   }
 
   return (
-    <>
+    <Layout>
       <SeoHead {...meta} />
       <Home />
-    </>
+    </Layout>
   )
 }

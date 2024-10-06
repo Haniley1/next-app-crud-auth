@@ -1,6 +1,6 @@
+import Link from 'next/link'
 import { Icon } from 'components/Icon'
 import styles from './styles.module.scss'
-import Link from 'next/link'
 
 export const CompanyLogo = () => {
   return (

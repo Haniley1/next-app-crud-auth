@@ -1,5 +1,3 @@
-import type { User } from "api/models";
-
 export const getAvatarSrc = async (avatar: string | FileList): Promise<string | null> => {
   if (typeof avatar === 'string') {
     return avatar

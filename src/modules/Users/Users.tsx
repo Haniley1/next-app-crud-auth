@@ -1,16 +1,16 @@
-import useSWR from 'swr/immutable'
-import styles from './styles.module.scss'
-import { API_PATHS } from 'api/paths'
-import { getUsers } from 'api/endpoints'
-import { UserFilters, UserModal, UsersList } from './components'
-import type { User } from 'api/models'
 import { useState } from 'react'
-import type { UserFiltersForm } from './components/UserFilters/types'
+import useSWR from 'swr/immutable'
+import { getUsers } from 'api/endpoints'
+import type { User } from 'api/models'
+import { API_PATHS } from 'api/paths'
 import { Button } from 'components/forms'
 import { useBoolState } from 'hooks'
-import type { UserFormValues } from './components/UserForm/types'
-import { getAvatarSrc } from './utils/utils'
 import { makeid } from 'utils/string'
+import { UserFilters, UserModal, UsersList } from './components'
+import type { UserFiltersForm } from './components/UserFilters/types'
+import type { UserFormValues } from './components/UserForm/types'
+import styles from './styles.module.scss'
+import { getAvatarSrc } from './utils/utils'
 
 export const Users = () => {
   const { data: users, mutate } = useSWR(API_PATHS.users, getUsers)
@@ -31,8 +31,6 @@ export const Users = () => {
     const newUser: User = { ...user, id: makeid(), avatar }
     const newUsersData = [...users?.data, newUser]
 
-    console.log(newUser)
-
     mutate({ ...users, data: newUsersData }, { revalidate: false })
     hideModal()
   }
@@ -41,7 +39,7 @@ export const Users = () => {
     <div>
       <div className={styles.header}>
         <h1>Пользователи</h1>
-        <Button children="+ Добавить пользователя" onClick={showModal} />
+        <Button onClick={showModal}>+ Добавить пользователя</Button>
       </div>
       <UserFilters onSubmit={setFilters} />
       <UsersList

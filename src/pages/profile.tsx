@@ -2,6 +2,7 @@ import { getIronSession } from 'iron-session'
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getUser } from 'api/endpoints'
 import type { Meta, User } from 'api/models'
+import { ROUTES } from 'api/paths'
 import { sessionOptions, type SessionData } from 'api/session'
 import { Layout, SeoHead } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
@@ -14,6 +15,20 @@ export const getServerSideProps = (async (ctx) => {
     ctx.res,
     sessionOptions
   )
+
+  console.log('get props')
+
+  if (!session.isLoggedIn) {
+    const params = new URLSearchParams()
+    params.append('redirect', ROUTES.profile)
+
+    return {
+      redirect: {
+        destination: ROUTES.login + '?' + params.toString(),
+        permanent: false,
+      },
+    }
+  }
 
   try {
     const response = await getUser(session.id!)

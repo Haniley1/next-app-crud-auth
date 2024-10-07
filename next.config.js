@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const svg = require('@neodx/svg/webpack')
 
 /** @type {import('next').NextConfig} */

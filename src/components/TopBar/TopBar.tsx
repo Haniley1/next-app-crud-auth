@@ -1,5 +1,4 @@
-import { Container } from 'components'
-import { CompanyLogo } from 'components/CompanyLogo'
+import { Container, CompanyLogo } from 'components'
 import { Links } from './components'
 import styles from './styles.module.scss'
 

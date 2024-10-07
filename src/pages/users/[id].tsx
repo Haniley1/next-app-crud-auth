@@ -10,6 +10,7 @@ import { API_PATHS } from 'api/paths'
 import { Layout, SeoHead } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
 import type { ParamsStatic } from 'types'
+import { REVALIDATE_COUNT } from 'utils/constants'
 import { defineNextError } from 'utils/defineNextError'
 import { fullname } from 'utils/string'
 
@@ -34,9 +35,12 @@ export const getStaticProps = (async (context) => {
     const response = await getUser(id)
 
     return {
+      revalidate: REVALIDATE_COUNT,
       props: {
         user: response,
         fallback: {
+          // Здесь необязательно использовать SWR, но просто показываю как можно
+          // закешировать данные для SWR с серверной стороны
           [unstable_serialize([API_PATHS.users, id])]: response,
         },
       },

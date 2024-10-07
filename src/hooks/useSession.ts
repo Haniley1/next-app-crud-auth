@@ -1,25 +1,26 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
+import type { UserLogin } from 'api/models'
 import { API_PATHS } from 'api/paths'
 import { defaultSession, type SessionData } from 'api/session'
 
-async function fetchJson<JSON = unknown>(
+async function fetcher<JSON = unknown>(
   url: string,
   init?: AxiosRequestConfig
 ): Promise<JSON> {
   return axios(url, init).then((res) => res.data)
 }
 
-function doLogin(url: string, { arg }: { arg: { email: string, password: string } }) {
-  return fetchJson<SessionData>(url, {
+function doLogin(url: string, { arg }: { arg: UserLogin }) {
+  return fetcher<SessionData>(url, {
     method: 'POST',
-    data: arg
+    data: arg,
   })
 }
 
 function doLogout(url: string) {
-  return fetchJson<SessionData>(url, {
+  return fetcher<SessionData>(url, {
     method: 'DELETE',
   })
 }
@@ -27,7 +28,7 @@ function doLogout(url: string) {
 export function useSession() {
   const { data: session, isLoading } = useSWR(
     API_PATHS.session,
-    fetchJson<SessionData>,
+    fetcher<SessionData>,
     {
       fallbackData: defaultSession,
     }

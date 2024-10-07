@@ -8,3 +8,8 @@ export interface User {
    */
   avatar: string | null // img src
 }
+
+export interface UserLogin {
+  email: string;
+  password: string;
+}

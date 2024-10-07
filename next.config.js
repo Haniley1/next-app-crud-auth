@@ -4,7 +4,6 @@ const svg = require('@neodx/svg/webpack')
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone',
   images: {
     domains: ['reqres.in'],
     remotePatterns: [

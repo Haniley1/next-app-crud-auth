@@ -1,4 +1,5 @@
 import ReactModal from 'react-modal'
+import { Button } from 'components/forms'
 import styles from './styles.module.scss'
 import type { ModalProps } from './types'
 
@@ -7,11 +8,15 @@ export const Modal = ({ show, children, onClose }: ModalProps) => {
     <ReactModal
       isOpen={show}
       className={styles.Modal}
+      ariaHideApp={false}
       overlayClassName={styles.Overlay}
       shouldCloseOnEsc
       shouldCloseOnOverlayClick
       onRequestClose={onClose}
     >
+      <Button className={styles.closeButton} onClick={onClose}>
+        x
+      </Button>
       {children}
     </ReactModal>
   )

@@ -1,12 +1,13 @@
-import type { SessionOptions } from "iron-session";
+import type { SessionOptions } from "iron-session"
 
 export interface SessionData {
-  isLoggedIn: boolean;
-  token?: string;
+  isLoggedIn: boolean
+  id?: number
+  token?: string
 }
 
 export const defaultSession: SessionData = {
-  isLoggedIn: false
+  isLoggedIn: false,
 }
 
 export const sessionOptions: SessionOptions = {
@@ -15,6 +16,6 @@ export const sessionOptions: SessionOptions = {
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 дней
-  }
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
+  },
 }

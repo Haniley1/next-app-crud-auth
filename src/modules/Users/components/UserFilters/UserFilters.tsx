@@ -6,7 +6,8 @@ import styles from './styles.module.scss'
 import type { UserFiltersForm, UserFiltersProps } from './types'
 
 export const UserFilters = ({ onSubmit }: UserFiltersProps) => {
-  const { searchParamsValues, addSearchParams, isReady } = useSearchParamsFilter()
+  const { searchParamsValues, addSearchParams, isReady } =
+    useSearchParamsFilter()
   const { register, watch, handleSubmit } = useForm<UserFiltersForm>({
     values: searchParamsValues,
   })
@@ -15,11 +16,11 @@ export const UserFilters = ({ onSubmit }: UserFiltersProps) => {
     const debouncedSubmit = debounce((values) => {
       addSearchParams(values as UserFiltersForm)
       handleSubmit(onSubmit)()
-    })
+    }, 300)
     const subscription = watch(debouncedSubmit)
 
     return () => subscription.unsubscribe()
-  }, [addSearchParams, handleSubmit, onSubmit, watch])
+  }, [])
 
   // Вызвать сабмит фильтров, когда подтянутся значения из GET-параметров
   // Хак, чтобы список пользаков не отрисовывался дважды: без фильтров и с фильтрами

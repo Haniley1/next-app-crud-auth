@@ -19,7 +19,7 @@ export type IconSize =
   | '12'
   | '8'
 
-export interface IIconProps<T extends SpriteSections>
+export interface IconProps<T extends SpriteSections>
   extends SVGProps<SVGSVGElement> {
   section: T
   name: SpritesMap[T]

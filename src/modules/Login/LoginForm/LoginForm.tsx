@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Icon } from 'components'
 import { Button } from 'components/forms'
@@ -10,20 +9,25 @@ import {
 import styles from './styles.module.scss'
 import type { LoginFormProps, LoginFormValues } from './types'
 
-export const LoginForm = ({ error, onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     setError,
-  } = useForm<LoginFormValues>({ mode: 'onChange' })
+  } = useForm<LoginFormValues>({
+    mode: 'onChange',
+    // Только для теста
+    defaultValues: { email: 'eve.holt@reqres.in', password: '123456' },
+  })
 
-  useEffect(() => {
-    error && setError('root', { message: error })
-  }, [error])
+  const beforeSubmit = async (values: LoginFormValues) => {
+    const error = await onSubmit(values)
+    error && setError('root', { message: error.message })
+  }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(beforeSubmit)}>
       <input
         type="email"
         placeholder="Электронная почта"
@@ -48,10 +52,9 @@ export const LoginForm = ({ error, onSubmit }: LoginFormProps) => {
         <input
           type="checkbox"
           style={{ marginRight: 12 }}
-          {...register(
-            'acceptLicenceAgreement',
-            {...requiredValidator('Необходимо принять правила соглашения')}
-          )}
+          {...register('acceptLicenceAgreement', {
+            ...requiredValidator('Необходимо принять правила соглашения'),
+          })}
         />
         <span>
           Я принимаю{' '}

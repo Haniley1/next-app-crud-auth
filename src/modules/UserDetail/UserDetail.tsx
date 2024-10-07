@@ -11,7 +11,6 @@ export const UserDetail = ({ user }: { user: User }) => {
           width={384}
           height={384}
           alt="avatar"
-          priority
         />
       )}
       <h1>{fullname(user.first_name, user.last_name)}</h1>

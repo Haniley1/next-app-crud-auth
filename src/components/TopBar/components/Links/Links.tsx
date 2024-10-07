@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { ReactNode } from 'react'
 import { ROUTES } from 'api/paths'
-import { Icon } from 'components/Icon'
-import type { IIconProps, SpriteSections } from 'components/Icon/types'
+import { Icon } from 'components'
+import type { IconProps, SpriteSections } from 'components/Icon/types'
 import styles from './styles.module.scss'
 import { LogoutButton } from '../LogoutButton'
 
 interface TopBarLink {
   href: string
-  icon: IIconProps<SpriteSections>
+  icon: IconProps<SpriteSections>
   text: ReactNode
 }
 

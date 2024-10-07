@@ -1,17 +1,22 @@
+import { getIronSession } from 'iron-session'
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getUser } from 'api/endpoints'
 import type { Meta, User } from 'api/models'
+import { sessionOptions, type SessionData } from 'api/session'
 import { Layout, SeoHead } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
 import { defineNextError } from 'utils/defineNextError'
 import { fullname } from 'utils/string'
 
-export const getServerSideProps = (async () => {
-  // В реальном кейсе - получали бы данные пользака из токена авторизации или ID
-  const userId = 5
+export const getServerSideProps = (async (ctx) => {
+  const session = await getIronSession<SessionData>(
+    ctx.req,
+    ctx.res,
+    sessionOptions
+  )
 
   try {
-    const response = await getUser(userId)
+    const response = await getUser(session.id!)
 
     return { props: response }
   } catch (error) {

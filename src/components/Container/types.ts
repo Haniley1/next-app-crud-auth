@@ -1,6 +1,6 @@
-import { ElementType } from 'react'
+import { ElementType, type PropsWithChildren } from 'react'
 
-export interface ContainerProps {
+export interface ContainerProps extends PropsWithChildren {
   rootStyles?: string
   as?: ElementType
   type?: 'banner' | 'detailContainer'

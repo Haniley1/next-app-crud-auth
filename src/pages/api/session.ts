@@ -2,7 +2,7 @@ import type { AxiosError } from 'axios'
 import { getIronSession } from 'iron-session'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'api/endpoints'
-import { defaultSession, SessionData, sessionOptions } from 'api/session'
+import { defaultSession, sessionOptions, type SessionData } from 'api/session'
 import { SignInErrorResponse } from './../../api/endpoints/auth'
 
 export default async function login(
@@ -23,6 +23,7 @@ export default async function login(
         .then(async (res) => {
           session.token = res.data.token
           session.isLoggedIn = true
+          session.id = 5
           await session.save()
 
           return response.status(200).json(session)

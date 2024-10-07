@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { SPRITES_META } from './sprite.gen'
 import styles from './styles.module.scss'
-import { IIconProps, SpriteSections } from './types'
+import { IconProps, SpriteSections } from './types'
 
 export const Icon = <T extends SpriteSections>({
   iconStyles,
@@ -9,7 +9,7 @@ export const Icon = <T extends SpriteSections>({
   section,
   size,
   onClick,
-}: IIconProps<T>): JSX.Element => {
+}: IconProps<T>) => {
   const { filePath } = SPRITES_META[section] || {}
 
   return (

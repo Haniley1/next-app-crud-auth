@@ -13,7 +13,7 @@ export const UserForm = ({ onSubmit: propOnSubmit }: UserFormProps) => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<UserFormValues>({ mode: 'onBlur' })
+  } = useForm<UserFormValues>({ mode: 'onChange' })
 
   const onSubmit = (values: UserFormValues) => {
     const file = values.avatar.item(0)

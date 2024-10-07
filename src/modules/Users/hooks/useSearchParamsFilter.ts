@@ -1,13 +1,15 @@
 import { useRouter } from 'next/router'
 import type { UserFiltersForm } from '../components/UserFilters/types'
 
-export function removeUndefinedKeys<T extends Record<string, unknown>>(
-  obj: T
-): T {
+export function removeEmptyKeys<T extends Record<string, unknown>>(obj: T): T {
   const newObj = { ...obj }
 
   Object.keys(newObj).forEach((key) => {
-    if (newObj[key] === undefined) {
+    if (
+      newObj[key] === undefined ||
+      newObj[key] === null ||
+      newObj[key] === ''
+    ) {
       delete newObj[key]
     }
   })
@@ -25,10 +27,10 @@ export const useSearchParamsFilter = () => {
   }
 
   const addSearchParams = (values: UserFiltersForm) => {
-    const params: UserFiltersForm = removeUndefinedKeys({
-      email: values.email || undefined,
-      first_name: values.first_name || undefined,
-      last_name: values.last_name || undefined,
+    const params: UserFiltersForm = removeEmptyKeys({
+      email: values.email,
+      first_name: values.first_name,
+      last_name: values.last_name,
     })
 
     push({ query: params }, undefined, { shallow: true })

@@ -1,6 +1,5 @@
 export interface LoginFormProps {
-  onSubmit: (values: LoginFormValues) => void
-  error?: string;
+  onSubmit: (values: LoginFormValues) => Promise<Error | void>
 }
 
 export interface LoginFormValues {

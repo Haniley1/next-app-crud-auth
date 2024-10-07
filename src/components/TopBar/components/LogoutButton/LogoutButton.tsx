@@ -10,6 +10,7 @@ export const LogoutButton = ({ className }: { className: string }) => {
 
   const onLogout = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault()
+    // TODO: Лучше редиректить на уровне middleware
     router.push(ROUTES.home)
     logout(null, { optimisticData: defaultSession })
   }

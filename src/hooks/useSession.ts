@@ -25,10 +25,13 @@ function doLogout(url: string) {
   })
 }
 
+/**
+ * Хук для получения сессии пользователя в клиентских компонентах
+ */
 export function useSession() {
-  const { data: session, isLoading } = useSWR(
+  const { data: session, isLoading } = useSWR<SessionData>(
     API_PATHS.session,
-    fetcher<SessionData>,
+    fetcher,
     {
       fallbackData: defaultSession,
     }

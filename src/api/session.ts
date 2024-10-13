@@ -22,7 +22,10 @@ export const sessionOptions: SessionOptions = {
   },
 }
 
-export const getSession = (
+ /**
+ * Метод для получения текущей сессии в серверных компонентах
+ */
+ export const getSession = (
   req: IncomingMessage,
   res: ServerResponse<IncomingMessage>,
 ) => {

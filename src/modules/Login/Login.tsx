@@ -1,6 +1,5 @@
-import type { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import type { SignInErrorResponse } from 'api/endpoints'
 import { useSession } from 'hooks'
 import { LoginForm } from './LoginForm'
 import type { LoginFormValues } from './LoginForm/types'
@@ -10,15 +9,19 @@ export const Login = () => {
   const { login } = useSession()
 
   const onSubmit = async (values: LoginFormValues) => {
-    return login(values)
-      .then(() => {
-        if (router.query.redirect) {
-          router.push(router.query.redirect.toString())
-        }
-      })
-      .catch((err: AxiosError<SignInErrorResponse>) => {
-        return Error(err.response?.data.error)
-      })
+    try {
+      await login(values)
+
+      if (router.query.redirect) {
+        router.push(router.query.redirect.toString())
+      }
+    } catch (err) {
+      const error = isAxiosError(err)
+        ? err.response?.data.error
+        : 'Произошла непредвиденная ошибка'
+      
+      return new Error(error)
+    }
   }
 
   return <LoginForm onSubmit={onSubmit} />

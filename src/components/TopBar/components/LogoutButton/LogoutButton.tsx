@@ -11,10 +11,11 @@ export const LogoutButton = ({ className }: { className: string }) => {
     evt.preventDefault()
 
     await logout(null, { optimisticData: defaultSession })
+    // TODO: Костыльно, возможно можно получать новую сессию по другому
     router.reload()
   }
 
-  if (!session.isLoggedIn) return null
+  if (!session?.isLoggedIn) return null
 
   return <a className={className} onClick={onLogout} >Выйти</a>
 }

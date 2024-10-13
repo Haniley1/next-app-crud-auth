@@ -1,4 +1,6 @@
-import type { SessionOptions } from "iron-session"
+import type { IncomingMessage, ServerResponse } from 'http'
+import type { SessionOptions } from 'iron-session'
+import { getIronSession } from 'iron-session'
 
 export interface SessionData {
   isLoggedIn: boolean
@@ -18,4 +20,11 @@ export const sessionOptions: SessionOptions = {
     secure: process.env.NODE_ENV === 'production',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
   },
+}
+
+export const getSession = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => {
+  return getIronSession<SessionData>(req, res, sessionOptions)
 }

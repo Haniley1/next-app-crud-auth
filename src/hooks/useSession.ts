@@ -26,7 +26,7 @@ function doLogout(url: string) {
 }
 
 /**
- * Хук для получения сессии пользователя в клиентских компонентах
+ * Хук для получения и взаимодействия с сессией пользователя в клиентских компонентах
  */
 export function useSession() {
   const { data: session, isLoading } = useSWR<SessionData>(

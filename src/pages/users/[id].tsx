@@ -57,7 +57,7 @@ export default function UsersPage({
   user,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const meta: Meta = {
-    seoTitle: `Пользователь ${fullname(user.data.first_name, user.data.last_name)}`,
+    seoTitle: `Пользователь ${fullname(user.data)}`,
   }
 
   return (

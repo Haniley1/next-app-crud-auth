@@ -1,3 +1,5 @@
+import type { User } from 'api/models'
+
 export function makeid(length = 8) {
   let result = ''
   let counter = 0
@@ -14,5 +16,4 @@ export function makeid(length = 8) {
   return result
 }
 
-export const fullname = (firstName: string, lastName: string) =>
-  `${firstName} ${lastName}`
+export const fullname = (user: User) => `${user.first_name} ${user.last_name}`

@@ -24,7 +24,7 @@ export const UserCard = ({ user, onDelete }: UserCardProps) => {
               />
             )}
           </div>
-          <h3>{fullname(user.first_name, user.last_name)}</h3>
+          <h3>{fullname(user)}</h3>
           <span>{user.email}</span>
         </div>
       </Link>

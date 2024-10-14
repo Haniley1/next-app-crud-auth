@@ -30,7 +30,7 @@ export default function ProfilePage({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const meta: Meta = {
-    seoTitle: `Профиль ${fullname(data.first_name, data.last_name)}`,
+    seoTitle: `Профиль ${fullname(data)}`,
   }
 
   return (

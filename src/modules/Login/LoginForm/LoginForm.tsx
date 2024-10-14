@@ -23,7 +23,10 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
 
   const beforeSubmit = async (values: LoginFormValues) => {
     const error = await onSubmit(values)
-    error && setError('root', { message: error.message })
+
+    if (error && error instanceof Error) {
+      setError('root', { message: error.message })
+    }
   }
 
   return (

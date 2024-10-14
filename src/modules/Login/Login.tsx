@@ -6,7 +6,7 @@ import type { LoginFormValues } from './LoginForm/types'
 
 export const Login = () => {
   const router = useRouter()
-  const { login } = useSession()
+  const { login, session } = useSession()
 
   const onSubmit = async (values: LoginFormValues) => {
     try {
@@ -22,6 +22,10 @@ export const Login = () => {
       
       return new Error(error)
     }
+  }
+
+  if (session?.isLoggedIn) {
+    return <h2>Вы уже авторизованы</h2>
   }
 
   return <LoginForm onSubmit={onSubmit} />

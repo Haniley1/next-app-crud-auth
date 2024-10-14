@@ -10,9 +10,7 @@ export function withAuth(
     const session = await getSession(context.req, context.res)
 
     if (!session.isLoggedIn) {
-      const params = new URLSearchParams()
-      params.append('redirect', redirectOnAuth)
-      const destination = ROUTES.login + '?' + params.toString()
+      const destination = `${ROUTES.login}?redirect=${redirectOnAuth}`
 
       return {
         redirect: { statusCode: 302, destination },

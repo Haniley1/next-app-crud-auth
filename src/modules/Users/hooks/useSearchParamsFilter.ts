@@ -1,21 +1,6 @@
 import { useRouter } from 'next/router'
+import { removeEmptyKeys } from 'utils/object'
 import type { UserFiltersForm } from '../components/UserFilters/types'
-
-export function removeEmptyKeys<T extends Record<string, unknown>>(obj: T): T {
-  const newObj = { ...obj }
-
-  Object.keys(newObj).forEach((key) => {
-    if (
-      newObj[key] === undefined ||
-      newObj[key] === null ||
-      newObj[key] === ''
-    ) {
-      delete newObj[key]
-    }
-  })
-
-  return newObj
-}
 
 export const useSearchParamsFilter = () => {
   const { query, isReady, push } = useRouter()

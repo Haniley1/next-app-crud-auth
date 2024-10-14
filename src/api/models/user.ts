@@ -3,13 +3,11 @@ export interface User {
   email: string
   first_name: string
   last_name: string
-  /**
-   * Ссылка на картинку
-   */
-  avatar: string | null // img src
+  /** Ссылка на картинку */
+  avatar: string | null
 }
 
 export interface UserLogin {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }

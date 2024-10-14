@@ -5,6 +5,7 @@ import { API_PATHS } from 'api/paths'
 import { Layout, SeoHead } from 'components/core'
 import { Users } from 'modules/Users'
 import { defineNextError } from 'utils/defineNextError'
+import { unstable_serialize } from 'swr'
 
 export const getStaticProps = (async () => {
   try {
@@ -13,7 +14,7 @@ export const getStaticProps = (async () => {
     return {
       props: {
         fallback: {
-          [API_PATHS.users]: response,
+          [unstable_serialize([API_PATHS.users])]: response,
         },
       },
     }

@@ -3,6 +3,10 @@
 .header {
   display: flex;
   justify-content: space-between;
+
+  @include tabletMax {
+    flex-direction: column;
+  }
 }
 
 .usersGrid {

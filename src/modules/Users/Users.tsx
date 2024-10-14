@@ -13,7 +13,7 @@ import styles from './styles.module.scss'
 import { getAvatarSrc } from './utils/utils'
 
 export const Users = () => {
-  const { data: users, mutate } = useSWR(API_PATHS.users, getUsers)
+  const { data: users, mutate } = useSWR([API_PATHS.users], getUsers)
   const [filters, setFilters] = useState<UserFiltersForm>()
   const [isShowModal, showModal, hideModal] = useBoolState(false)
 

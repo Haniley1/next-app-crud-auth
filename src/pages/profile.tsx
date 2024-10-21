@@ -1,6 +1,6 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getUser } from 'api/endpoints'
-import type { Meta, User } from 'api/models'
+import type { Meta } from 'api/models'
 import { ROUTES } from 'api/paths'
 import { getSession } from 'api/session'
 import { Layout, SeoHead, withAuth } from 'components/core'
@@ -9,20 +9,17 @@ import { defineNextError } from 'utils/defineNextError'
 import { fullname } from 'utils/string'
 
 export const getServerSideProps = withAuth(async (ctx) => {
-  const session = await getSession(
-    ctx.req,
-    ctx.res,
-  )
+  const session = await getSession(ctx.req, ctx.res)
 
   try {
     const response = await getUser(session.id!)
+    throw Error('test')
 
     return { props: response }
   } catch (error) {
-    return {
-      ...defineNextError(error),
-      props: { data: {} as User },
-    }
+    const err = defineNextError(error)
+    console.log(err)
+    return err
   }
 }, ROUTES.profile) satisfies GetServerSideProps
 

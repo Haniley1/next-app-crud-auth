@@ -16,4 +16,4 @@ export function makeid(length = 8) {
   return result
 }
 
-export const fullname = (user: User) => `${user.first_name} ${user.last_name}`
+export const fullname = (user: User) => `${user?.first_name} ${user?.last_name}`

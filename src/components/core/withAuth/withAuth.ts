@@ -2,11 +2,8 @@ import type { GetServerSideProps } from 'next'
 import { ROUTES } from 'api/paths'
 import { getSession } from 'api/session'
 
-export function withAuth(
-  gssp: GetServerSideProps,
-  redirectOnAuth: string
-): GetServerSideProps {
-  return async (context) => {
+export function withAuth(gssp: GetServerSideProps, redirectOnAuth: string) {
+  return (async (context) => {
     const session = await getSession(context.req, context.res)
 
     if (!session.isLoggedIn) {
@@ -18,16 +15,10 @@ export function withAuth(
     }
 
     const gsspData = await gssp(context)
-
-    if (!('props' in gsspData)) {
-      throw new Error('invalid getSSP result')
-    }
+    const props = gsspData?.props ? { ...gsspData.props } : { session }
 
     return {
-      props: {
-        ...gsspData.props,
-        session,
-      },
+      props,
     }
-  }
+  }) satisfies GetServerSideProps
 }

@@ -1,48 +1,25 @@
 import { AxiosError } from 'axios'
 import { GetStaticPropsResult } from 'next'
 
-export function is500Error(err: unknown): boolean {
-  if (
-    err instanceof AxiosError &&
-    typeof err.response?.status === 'number' &&
-    err?.response?.status >= 500
-  ) {
-    return true
-  }
+type ReturnedProps = GetStaticPropsResult<{ isError500: boolean }>
 
-  return false
-}
-
-const error = {
+const error: ReturnedProps = {
   props: {
     isError500: true,
   },
 }
-const notFound = {
+const notFound: ReturnedProps = {
   notFound: true,
 }
 
-const createProps = (isServerSide: boolean, is500Err: boolean) => {
-  if (isServerSide && is500Err) {
-    return error
-  }
-
-  if (isServerSide && !is500Err) {
-    return notFound
-  }
-
-  if (is500Err) {
-    return { ...error }
-  }
-
-  return { ...notFound }
+export function is500Error(err: unknown): boolean {
+  return (
+    err instanceof AxiosError &&
+    !!err.response?.status &&
+    err?.response?.status >= 500
+  )
 }
 
-type ReturnedProps = GetStaticPropsResult<{ isError500: boolean }>
-
-export const defineNextError = (
-  err: unknown,
-  isServerSide?: boolean
-): ReturnedProps => {
-  return createProps(!!isServerSide, is500Error(err)) as ReturnedProps
+export const defineNextError = (err: unknown): ReturnedProps => {
+  return is500Error(err) ? error : notFound
 }

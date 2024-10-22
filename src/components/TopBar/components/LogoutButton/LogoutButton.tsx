@@ -1,21 +1,21 @@
 import { useRouter } from 'next/router'
-import type { MouseEvent } from 'react'
-import { defaultSession } from 'api/session'
+import { Button } from 'components/Button'
 import { useSession } from 'hooks'
+import type { LogoutButtonProps } from './types'
 
-export const LogoutButton = ({ className }: { className: string }) => {
+export const LogoutButton = ({ className }: LogoutButtonProps) => {
   const router = useRouter()
-  const { session, logout } = useSession()
+  const { logout } = useSession()
 
-  const onLogout = async (evt: MouseEvent<HTMLAnchorElement>) => {
-    evt.preventDefault()
-
-    await logout(null, { optimisticData: defaultSession })
+  const onLogout = async () => {
+    await logout()
     // TODO: Костыльно, возможно можно получать новую сессию по другому
     router.reload()
   }
 
-  if (!session?.isLoggedIn) return null
-
-  return <a className={className} onClick={onLogout} >Выйти</a>
+  return (
+    <Button className={className} onClick={onLogout}>
+      Выйти
+    </Button>
+  )
 }

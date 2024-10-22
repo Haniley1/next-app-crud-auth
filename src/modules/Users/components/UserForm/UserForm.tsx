@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Button } from 'components/forms'
+import { Button } from 'components/Button'
 import { emailValidator, requiredValidator } from 'utils/form'
 import { ariaInvalid } from 'utils/form/misc'
 import styles from './styles.module.scss'

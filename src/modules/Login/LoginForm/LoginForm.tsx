@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Icon } from 'components'
-import { Button } from 'components/forms'
+import { Button } from 'components/Button'
 import {
   emailValidator,
   passwordValidator,

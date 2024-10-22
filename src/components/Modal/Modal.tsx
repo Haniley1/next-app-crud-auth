@@ -1,5 +1,5 @@
 import ReactModal from 'react-modal'
-import { Button } from 'components/forms'
+import { Button } from 'components/Button'
 import styles from './styles.module.scss'
 import type { ModalProps } from './types'
 

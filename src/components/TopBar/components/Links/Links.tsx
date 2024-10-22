@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ROUTES } from 'api/paths'
 import { Icon } from 'components'
+import { useSession } from 'hooks'
 import styles from './styles.module.scss'
 import { LogoutButton } from '../LogoutButton'
 import type { TopBarLink } from './types'
@@ -22,6 +23,7 @@ const links: TopBarLink[] = [
 
 export const Links = () => {
   const router = useRouter()
+  const { session } = useSession()
 
   const isActiveLink = (link: string) => {
     const slugSubstring = router.pathname.match(/\[([^\]]+)\]/g)?.[0]
@@ -47,7 +49,7 @@ export const Links = () => {
           <span>{link.text}</span>
         </Link>
       ))}
-      <LogoutButton className={styles.linkItem} />
+      {session?.isLoggedIn && <LogoutButton className={styles.linkItem} />}
     </div>
   )
 }

@@ -14,13 +14,11 @@ export const getServerSideProps = withAuth(async (ctx) => {
 
   try {
     const response = await getUser(session.id!)
-    throw new AxiosError('test')
+    // throw new AxiosError('test')
 
     return { props: response }
   } catch (error) {
-    const err = defineNextError(error)
-    console.log(err)
-    return err
+    return defineNextError(error)
   }
 }, ROUTES.profile) satisfies GetServerSideProps
 

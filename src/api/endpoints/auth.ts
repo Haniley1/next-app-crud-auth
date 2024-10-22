@@ -1,4 +1,4 @@
-import api from "api/instance"
+import { api } from "api/instance"
 import { API_PATHS } from "api/paths"
 
 export interface SignInResponse {

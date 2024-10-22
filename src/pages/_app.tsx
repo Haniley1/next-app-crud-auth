@@ -6,14 +6,12 @@ import Error from './_error'
 
 export default function App({ Component, pageProps }: AppProps) {
   const { fallback = {}, isError500 = false } = pageProps
-  console.log(isError500)
 
   return (
     <SWRConfig value={{ fallback }}>
       <NextFonts />
       {isError500 && <Error />}
       {!isError500 && <Component {...pageProps} />}
-      <Component {...pageProps} />
     </SWRConfig>
   )
 }

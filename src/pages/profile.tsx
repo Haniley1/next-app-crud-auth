@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getUser } from 'api/endpoints'
 import type { Meta } from 'api/models'
@@ -13,7 +14,7 @@ export const getServerSideProps = withAuth(async (ctx) => {
 
   try {
     const response = await getUser(session.id!)
-    throw Error('test')
+    throw new AxiosError('test')
 
     return { props: response }
   } catch (error) {

@@ -1,4 +1,4 @@
-import api from 'api/instance'
+import { api } from 'api/instance'
 import { BaseListResponse, type User } from 'api/models'
 import { API_PATHS } from 'api/paths'
 

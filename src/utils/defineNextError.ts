@@ -13,7 +13,6 @@ const notFound: ReturnedProps = {
 }
 
 export function is500Error(err: unknown): boolean {
-  console.log(err, err instanceof AxiosError)
   return (
     err instanceof AxiosError &&
     !!err.response?.status &&

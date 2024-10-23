@@ -8,7 +8,7 @@ import { fullname } from 'utils/string'
 import styles from './styles.module.scss'
 import type { UserCardProps } from './types'
 
-export const UserCard = ({ user, onDelete }: UserCardProps) => {
+export const UserCard = ({ user, allowDelete, onDelete }: UserCardProps) => {
   return (
     <div className={styles.userCard}>
       <Link href={ROUTES.userDetail(user.id)} prefetch={false}>
@@ -28,13 +28,15 @@ export const UserCard = ({ user, onDelete }: UserCardProps) => {
           <span>{user.email}</span>
         </div>
       </Link>
-      <Button
-        className={clsx(styles.deleteButton, styles.button)}
-        type="button"
-        onClick={() => onDelete?.(user.id)}
-      >
-        <Icon section="general" name="trash" iconStyles={styles.deleteIcon} />
-      </Button>
+      {allowDelete && (
+        <Button
+          className={clsx(styles.deleteButton, styles.button)}
+          type="button"
+          onClick={() => onDelete?.(user.id)}
+        >
+          <Icon section="general" name="trash" iconStyles={styles.deleteIcon} />
+        </Button>
+      )}
     </div>
   )
 }

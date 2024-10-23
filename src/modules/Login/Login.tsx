@@ -6,7 +6,7 @@ import type { LoginFormValues } from './LoginForm/types'
 
 export const Login = () => {
   const router = useRouter()
-  const { loginMutation, session } = useSession()
+  const { loginMutation } = useSession()
 
   const onSubmit = async (values: LoginFormValues) => {
     try {
@@ -16,19 +16,14 @@ export const Login = () => {
         router.push(router.query.redirect.toString())
       }
     } catch (err) {
-      const error = isAxiosError(err) && err.response?.data
+      const isBackError = isAxiosError(err) && err.response?.data
+      const error = isBackError
         ? err.response?.data.error
         : 'Произошла непредвиденная ошибка'
-      
+
       return new Error(error)
     }
   }
-
-  if (session?.isLoggedIn) {
-    return <h2>Вы уже авторизованы</h2>
-  }
-
-  console.log(loginMutation.isMutating, router.isReady)
 
   return <LoginForm disabled={loginMutation.isMutating} onSubmit={onSubmit} />
 }

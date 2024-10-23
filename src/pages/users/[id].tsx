@@ -28,12 +28,12 @@ export const getStaticPaths = (async () => {
   }
 }) satisfies GetStaticPaths
 
-export const getStaticProps: GetStaticProps = (async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as ParamsStatic
 
   try {
     const response = await getUser(id)
-
+    const userKey = [API_PATHS.users, id]
     const meta: Meta = {
       seoTitle: `Пользователь ${fullname(response.data)}`,
     }
@@ -41,28 +41,28 @@ export const getStaticProps: GetStaticProps = (async (context) => {
     return {
       revalidate: REVALIDATE_COUNT,
       props: {
-        user: response,
+        userKey,
         meta,
         fallback: {
           // Здесь необязательно использовать SWR, но просто показываю как можно
           // закешировать данные для SWR с серверной стороны
-          [unstable_serialize([API_PATHS.users, id])]: response,
+          [unstable_serialize(userKey)]: response,
         },
       },
     }
   } catch (error) {
     return defineNextError(error)
   }
-})
+}
 
 export default function UsersPage({
-  user,
-  meta
+  userKey,
+  meta,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
       <SeoHead {...meta} />
-      <UserDetail user={user.data} />
+      <UserDetail dataKey={userKey} />
     </Layout>
   )
 }

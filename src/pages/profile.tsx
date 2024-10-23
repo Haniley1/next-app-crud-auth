@@ -1,7 +1,8 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { unstable_serialize } from 'swr'
 import { getUser } from 'api/endpoints'
 import type { Meta } from 'api/models'
-import { ROUTES } from 'api/paths'
+import { API_PATHS, ROUTES } from 'api/paths'
 import { Layout, SeoHead, withAuth } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
 import { defineNextError } from 'utils/defineNextError'
@@ -16,11 +17,20 @@ export const getServerSideProps: GetServerSideProps = withAuth(
         throw new Error('User not found')
       }
 
+      const dataKey = [API_PATHS.users, session.id]
       const meta: Meta = {
         seoTitle: `Профиль ${fullname(response.data)}`,
       }
 
-      return { props: { data: response.data, meta } }
+      return {
+        props: {
+          dataKey,
+          meta,
+          fallback: {
+            [unstable_serialize(dataKey)]: response,
+          },
+        },
+      }
     } catch (error) {
       return defineNextError(error)
     }
@@ -29,13 +39,13 @@ export const getServerSideProps: GetServerSideProps = withAuth(
 )
 
 export default function ProfilePage({
-  data,
+  dataKey,
   meta,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout>
       <SeoHead {...meta} />
-      <UserDetail user={data} />
+      <UserDetail dataKey={dataKey} />
     </Layout>
   )
 }

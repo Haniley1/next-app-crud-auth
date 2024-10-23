@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@hookform/error-message'
 import { useForm } from 'react-hook-form'
 import { Button } from 'components/Button'
 import { Icon } from 'components/Icon'
@@ -17,7 +18,6 @@ export const LoginForm = ({ disabled, onSubmit }: LoginFormProps) => {
     setError,
   } = useForm<LoginFormValues>({
     mode: 'onChange',
-    // Только для теста
     defaultValues: { email: 'eve.holt@reqres.in', password: '123456' },
   })
 
@@ -30,7 +30,7 @@ export const LoginForm = ({ disabled, onSubmit }: LoginFormProps) => {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(beforeSubmit, )}>
+    <form className={styles.form} onSubmit={handleSubmit(beforeSubmit)}>
       <input
         type="email"
         placeholder="Электронная почта"
@@ -39,7 +39,7 @@ export const LoginForm = ({ disabled, onSubmit }: LoginFormProps) => {
           ...emailValidator(),
         })}
       />
-      {errors.email && <span>{errors.email.message}</span>}
+      <ErrorMessage name="email" errors={errors} />
 
       <input
         type="password"
@@ -49,7 +49,7 @@ export const LoginForm = ({ disabled, onSubmit }: LoginFormProps) => {
           ...passwordValidator(),
         })}
       />
-      {errors.password && <span>{errors.password.message}</span>}
+      <ErrorMessage name="password" errors={errors} />
 
       <label>
         <input
@@ -66,11 +66,13 @@ export const LoginForm = ({ disabled, onSubmit }: LoginFormProps) => {
           </a>
         </span>
       </label>
-      {errors.acceptLicenceAgreement && (
-        <span>{errors.acceptLicenceAgreement.message}</span>
-      )}
+      <ErrorMessage name="acceptLicenceAgreement" errors={errors} />
 
-      <Button type="submit" disabled={!isValid || disabled} className={styles.signInButton}>
+      <Button
+        type="submit"
+        disabled={!isValid || disabled}
+        className={styles.signInButton}
+      >
         <Icon section="arrows" name="sign-in" iconStyles={styles.signInIcon} />
         <span>Войти</span>
       </Button>

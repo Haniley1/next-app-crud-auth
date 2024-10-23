@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
-import { Icon } from 'components'
 import { Button } from 'components/Button'
+import { Icon } from 'components/Icon'
 import {
   emailValidator,
   passwordValidator,
@@ -9,7 +9,7 @@ import {
 import styles from './styles.module.scss'
 import type { LoginFormProps, LoginFormValues } from './types'
 
-export const LoginForm = ({ onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ disabled, onSubmit }: LoginFormProps) => {
   const {
     register,
     handleSubmit,
@@ -30,7 +30,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(beforeSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(beforeSubmit, )}>
       <input
         type="email"
         placeholder="Электронная почта"
@@ -70,7 +70,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
         <span>{errors.acceptLicenceAgreement.message}</span>
       )}
 
-      <Button type="submit" disabled={!isValid} className={styles.signInButton}>
+      <Button type="submit" disabled={!isValid || disabled} className={styles.signInButton}>
         <Icon section="arrows" name="sign-in" iconStyles={styles.signInIcon} />
         <span>Войти</span>
       </Button>

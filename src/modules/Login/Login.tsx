@@ -6,17 +6,17 @@ import type { LoginFormValues } from './LoginForm/types'
 
 export const Login = () => {
   const router = useRouter()
-  const { login, session } = useSession()
+  const { loginMutation, session } = useSession()
 
   const onSubmit = async (values: LoginFormValues) => {
     try {
-      await login(values)
+      await loginMutation.trigger(values)
 
       if (router.query.redirect) {
         router.push(router.query.redirect.toString())
       }
     } catch (err) {
-      const error = isAxiosError(err)
+      const error = isAxiosError(err) && err.response?.data
         ? err.response?.data.error
         : 'Произошла непредвиденная ошибка'
       
@@ -28,5 +28,7 @@ export const Login = () => {
     return <h2>Вы уже авторизованы</h2>
   }
 
-  return <LoginForm onSubmit={onSubmit} />
+  console.log(loginMutation.isMutating, router.isReady)
+
+  return <LoginForm disabled={loginMutation.isMutating} onSubmit={onSubmit} />
 }

@@ -4,7 +4,7 @@ import type {
   GetStaticProps,
 } from 'next'
 import { unstable_serialize } from 'swr'
-import { getUser, getUsers, type GetUserResponse } from 'api/endpoints'
+import { getUser, getUsers } from 'api/endpoints'
 import type { Meta } from 'api/models'
 import { API_PATHS } from 'api/paths'
 import { Layout, SeoHead } from 'components/core'
@@ -15,9 +15,9 @@ import { defineNextError } from 'utils/defineNextError'
 import { fullname } from 'utils/string'
 
 export const getStaticPaths = (async () => {
-  const response = await getUsers()
-
   try {
+    const response = await getUsers()
+
     const paths = response.data.map((item) => ({
       params: { id: item.id.toString() },
     }))
@@ -28,16 +28,21 @@ export const getStaticPaths = (async () => {
   }
 }) satisfies GetStaticPaths
 
-export const getStaticProps = (async (context) => {
+export const getStaticProps: GetStaticProps = (async (context) => {
   const { id } = context.params as ParamsStatic
 
   try {
     const response = await getUser(id)
 
+    const meta: Meta = {
+      seoTitle: `Пользователь ${fullname(response.data)}`,
+    }
+
     return {
       revalidate: REVALIDATE_COUNT,
       props: {
         user: response,
+        meta,
         fallback: {
           // Здесь необязательно использовать SWR, но просто показываю как можно
           // закешировать данные для SWR с серверной стороны
@@ -46,20 +51,14 @@ export const getStaticProps = (async (context) => {
       },
     }
   } catch (error) {
-    return {
-      ...defineNextError(error),
-      props: { user: {} as GetUserResponse },
-    }
+    return defineNextError(error)
   }
-}) satisfies GetStaticProps
+})
 
 export default function UsersPage({
   user,
+  meta
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const meta: Meta = {
-    seoTitle: `Пользователь ${fullname(user.data)}`,
-  }
-
   return (
     <Layout>
       <SeoHead {...meta} />

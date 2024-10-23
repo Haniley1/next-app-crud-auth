@@ -37,10 +37,10 @@ export function useSession() {
     }
   )
 
-  const { trigger: login } = useSWRMutation(API_PATHS.session, doLogin, {
+  const loginMutation = useSWRMutation(API_PATHS.session, doLogin, {
     revalidate: false,
   })
-  const { trigger: logout } = useSWRMutation(API_PATHS.session, doLogout)
+  const logoutMutation = useSWRMutation(API_PATHS.session, doLogout)
 
-  return { session, logout, login, isLoading }
+  return { session, loginMutation, logoutMutation, isLoading }
 }

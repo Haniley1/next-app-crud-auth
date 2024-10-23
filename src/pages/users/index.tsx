@@ -1,36 +1,36 @@
-import type { GetStaticProps } from 'next'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { getUsers } from 'api/endpoints'
 import type { Meta } from 'api/models'
 import { API_PATHS } from 'api/paths'
 import { Layout, SeoHead } from 'components/core'
 import { Users } from 'modules/Users'
 import { defineNextError } from 'utils/defineNextError'
-import { unstable_serialize } from 'swr'
 
-export const getStaticProps = (async () => {
+export const getStaticProps: GetStaticProps = (async () => {
   try {
     const response = await getUsers()
+    const meta: Meta = {
+      seoTitle: 'Пользователи',
+    }
 
     return {
       props: {
+        meta,
         fallback: {
-          [unstable_serialize([API_PATHS.users])]: response,
+          [API_PATHS.users]: response,
         },
       },
+      revalidate: 10
     }
   } catch (error) {
     return defineNextError(error)
   }
-}) satisfies GetStaticProps
+})
 
-export default function UsersPage() {
-  const meta: Meta = {
-    seoTitle: 'Пользователи',
-  }
-
+export default function UsersPage({ meta }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <SeoHead {...meta} />
+      <SeoHead {...(meta as unknown as Meta)} />
       <Users />
     </Layout>
   )

@@ -5,10 +5,10 @@ import type { LogoutButtonProps } from './types'
 
 export const LogoutButton = ({ className }: LogoutButtonProps) => {
   const router = useRouter()
-  const { logout } = useSession()
+  const { logoutMutation } = useSession()
 
   const onLogout = async () => {
-    await logout()
+    await logoutMutation.trigger()
     // TODO: Костыльно, возможно можно получать новую сессию по другому
     router.reload()
   }

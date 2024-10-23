@@ -1,39 +1,41 @@
-import { useState } from 'react'
 import useSWR from 'swr/immutable'
 import { getUsers } from 'api/endpoints'
 import type { User } from 'api/models'
 import { API_PATHS } from 'api/paths'
 import { Button } from 'components/Button'
+import { Loader } from 'components/Loader'
 import { useBoolState } from 'hooks'
 import { makeid } from 'utils/string'
 import { UserFilters, UserModal, UsersList } from './components'
-import type { UserFiltersForm } from './components/UserFilters/types'
 import type { UserFormValues } from './components/UserForm/types'
+import { useFilteredUsers } from './hooks'
 import styles from './styles.module.scss'
 import { getAvatarSrc } from './utils/utils'
 
 export const Users = () => {
-  const { data: users, mutate } = useSWR([API_PATHS.users], getUsers)
-  const [filters, setFilters] = useState<UserFiltersForm>()
+  const { data: response, isLoading, mutate } = useSWR(API_PATHS.users, getUsers)
+  const { users, isReady } = useFilteredUsers(response?.data)
   const [isShowModal, showModal, hideModal] = useBoolState(false)
 
   const handleUserDelete = (id: User['id']) => {
-    if (!users) return
+    if (!response) return
 
-    const newUsersData = users?.data.filter((user) => user.id !== id)
-    mutate({ ...users, data: newUsersData }, { revalidate: false })
+    const newUsersData = response?.data.filter((user) => user.id !== id)
+    mutate({ ...response, data: newUsersData }, { revalidate: false })
   }
 
   const handleAddUser = async (user: UserFormValues) => {
-    if (!users) return
+    if (!response) return
 
     const avatar = await getAvatarSrc(user.avatar)
     const newUser: User = { ...user, id: makeid(), avatar }
-    const newUsersData = [...users?.data, newUser]
+    const newUsersData = [...response?.data, newUser]
 
-    mutate({ ...users, data: newUsersData }, { revalidate: false })
+    await mutate({ ...response, data: newUsersData }, { revalidate: false })
     hideModal()
   }
+
+  const showUsersList = !isLoading && isReady
 
   return (
     <div>
@@ -41,12 +43,14 @@ export const Users = () => {
         <h1>Пользователи</h1>
         <Button onClick={showModal}>+ Добавить пользователя</Button>
       </div>
-      <UserFilters onSubmit={setFilters} />
-      <UsersList
-        users={users?.data}
-        filters={filters}
-        onDelete={handleUserDelete}
-      />
+      <UserFilters onSubmit={() => mutate(undefined, { revalidate: false })} />
+      {!showUsersList && <Loader />}
+      {showUsersList && (
+        <UsersList
+          users={users}
+          onDelete={handleUserDelete}
+        />
+      )}
       <UserModal
         show={isShowModal}
         onClose={hideModal}

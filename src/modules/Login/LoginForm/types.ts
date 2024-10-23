@@ -1,4 +1,5 @@
 export interface LoginFormProps {
+  disabled: boolean
   onSubmit: (values: LoginFormValues) => Promise<Error | void>
 }
 

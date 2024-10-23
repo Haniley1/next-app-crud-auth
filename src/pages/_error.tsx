@@ -7,6 +7,7 @@ export function Error() {
       <Head>
         <title>Произошла ошибка!</title>
       </Head>
+      <h1>Произошла критическая ошибка</h1>
     </>
   )
 }

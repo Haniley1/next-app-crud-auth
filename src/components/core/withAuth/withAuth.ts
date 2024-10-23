@@ -1,9 +1,28 @@
-import type { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import type { IronSession } from 'iron-session'
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  PreviewData,
+} from 'next'
+import type { ParsedUrlQuery } from 'querystring'
 import { ROUTES } from 'api/paths'
-import { getSession } from 'api/session'
+import { getSession, type SessionData } from 'api/session'
 
-export function withAuth(gssp: GetServerSideProps, redirectOnAuth: string) {
-  return (async (context: GetServerSidePropsContext) => {
+export type GetServerSidePropsWithSession<
+  Props extends { [key: string]: unknown } = { [key: string]: unknown },
+  Params extends ParsedUrlQuery = ParsedUrlQuery,
+  Preview extends PreviewData = PreviewData,
+> = (
+  context: GetServerSidePropsContext<Params, Preview>,
+  session: IronSession<SessionData>
+) => Promise<GetServerSidePropsResult<Props>>
+
+export function withAuth(
+  gssp: GetServerSidePropsWithSession,
+  redirectOnAuth: string
+): GetServerSideProps {
+  return async (context: GetServerSidePropsContext) => {
     const session = await getSession(context.req, context.res)
 
     if (!session.isLoggedIn) {
@@ -14,7 +33,7 @@ export function withAuth(gssp: GetServerSideProps, redirectOnAuth: string) {
       }
     }
 
-    const gsspResult = await gssp(context)
+    const gsspResult = await gssp(context, session)
     return gsspResult
-  })
+  }
 }

@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router'
+import { useRouterReady } from 'hooks/useRouterReady'
 import { removeEmptyKeys } from 'utils/object'
 import type { UserFiltersForm } from '../components/UserFilters/types'
 
 export const useSearchParamsFilter = () => {
-  const { query, isReady, push } = useRouter()
+  const { query, push } = useRouter()
+  const isReady = useRouterReady()
 
   const searchParamsValues: UserFiltersForm = {
     email: query.email?.toString(),

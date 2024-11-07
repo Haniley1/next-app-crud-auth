@@ -25,8 +25,8 @@
   "devDependencies": {
     "@neodx/svg": "^0.7.1",
     "@types/node": "^20",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.17",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@types/react-modal": "^3.16.3",
     "@typescript-eslint/eslint-plugin": "6",
     "eslint": "^8",

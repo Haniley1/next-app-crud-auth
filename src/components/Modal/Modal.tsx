@@ -5,8 +5,6 @@ import type { ModalProps } from './types'
 
 export const Modal = ({ show, children, onClose }: ModalProps) => {
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     <ReactModal
       isOpen={show}
       className={styles.Modal}

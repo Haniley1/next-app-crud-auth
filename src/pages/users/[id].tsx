@@ -5,8 +5,8 @@ import type {
 } from 'next'
 import { unstable_serialize } from 'swr'
 import { getUser, getUsers } from 'api/endpoints'
+import { KEYS } from 'api/keys'
 import type { Meta } from 'api/models'
-import { API_PATHS } from 'api/paths'
 import { Layout, SeoHead } from 'components/core'
 import { UserDetail } from 'modules/UserDetail'
 import type { ParamsStatic } from 'types'
@@ -33,7 +33,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   try {
     const response = await getUser(id)
-    const userKey = [API_PATHS.users, id]
     const meta: Meta = {
       seoTitle: `Пользователь ${fullname(response.data)}`,
     }
@@ -41,12 +40,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
       revalidate: REVALIDATE_COUNT,
       props: {
-        userKey,
         meta,
         fallback: {
           // Здесь необязательно использовать SWR, но просто показываю как можно
           // закешировать данные для SWR с серверной стороны
-          [unstable_serialize(userKey)]: response,
+          [unstable_serialize(KEYS.users.detail(id))]: response,
         },
       },
     }
@@ -56,13 +54,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export default function UsersPage({
-  userKey,
   meta,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
       <SeoHead {...meta} />
-      <UserDetail dataKey={userKey} />
+      <UserDetail  />
     </Layout>
   )
 }

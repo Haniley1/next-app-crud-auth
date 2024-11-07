@@ -1,11 +1,10 @@
 import Image from 'next/image'
-import useSWR from 'swr'
-import { GetUserResponse } from 'api/endpoints'
 import { Loader } from 'components/Loader'
 import { fullname } from 'utils/string'
+import { useUserDetail } from './hooks/useUserDetail'
 
-export const UserDetail = ({ dataKey }: { dataKey: string }) => {
-  const { data, isLoading } = useSWR<GetUserResponse>(dataKey)
+export const UserDetail = () => {
+  const { data, isLoading } = useUserDetail()
 
   if (!data || isLoading) {
     return <Loader />

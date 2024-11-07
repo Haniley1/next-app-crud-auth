@@ -1,6 +1,7 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { unstable_serialize } from 'swr'
 import { getUser } from 'api/endpoints'
+import { KEYS } from 'api/keys'
 import type { Meta } from 'api/models'
 import { API_PATHS, ROUTES } from 'api/paths'
 import { Layout, SeoHead, withAuth } from 'components/core'
@@ -27,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(
           dataKey,
           meta,
           fallback: {
-            [unstable_serialize(dataKey)]: response,
+            [unstable_serialize(KEYS.users.detail(session.id!))]: response,
           },
         },
       }
@@ -39,13 +40,12 @@ export const getServerSideProps: GetServerSideProps = withAuth(
 )
 
 export default function ProfilePage({
-  dataKey,
   meta,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout>
       <SeoHead {...meta} />
-      <UserDetail dataKey={dataKey} />
+      <UserDetail />
     </Layout>
   )
 }
